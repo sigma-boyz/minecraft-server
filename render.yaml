@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: minecraft-server
+    docker:
+      - dockerfile: Dockerfile
+        context: .
+    env:
+      - PORT: 25565
+    ports:
+      - 25565:25565
