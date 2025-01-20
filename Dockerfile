@@ -1,17 +1,15 @@
-# Use OpenJDK 17 base image
-FROM openjdk:17-jdk-alpine
+FROM openjdk:21-jdk
 
-# Set the working directory
 WORKDIR /app
 
-# Copy the Minecraft server JAR file into the container
+# Copy server jar and config files into the container
 COPY server.jar /app/
+COPY server.properties /app/
+COPY eula.txt /app/
 
-# Expose the Minecraft port
+# Ensure the files are readable
+RUN chmod 644 /app/server.properties /app/eula.txt
+
 EXPOSE 25565
 
-# Set environment variables for Minecraft server
-ENV EULA=TRUE
-
-# Run the Minecraft server
-CMD ["java", "-Xmx1024M", "-Xms512M", "-jar", "server.jar", "nogui"]
+CMD ["java", "-Xmx512M", "-Xms256M", "-jar", "server.jar", "nogui"]
